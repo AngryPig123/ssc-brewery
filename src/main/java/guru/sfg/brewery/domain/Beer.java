@@ -17,17 +17,11 @@
 package guru.sfg.brewery.domain;
 
 import guru.sfg.brewery.web.model.BeerStyleEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -40,6 +34,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Beer extends BaseEntity {
 
@@ -70,7 +65,7 @@ public class Beer extends BaseEntity {
     private Integer quantityToBrew;
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     private Set<BeerInventory> beerInventory = new HashSet<>();
 }
