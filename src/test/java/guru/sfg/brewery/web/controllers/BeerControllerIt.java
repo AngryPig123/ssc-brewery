@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 public class BeerControllerIt extends BaseIT {
+
     @Test
     @WithMockUser("spring")
     void findBeers_mock_user() throws Exception {
