@@ -54,12 +54,15 @@ public class RestHeaderAuthFilter extends AbstractAuthenticationProcessingFilter
             this.logger.debug("Request is to process authentication");
         }
 
-        Authentication authResult = attemptAuthentication(request, response);
-
-        if (authResult != null) {
-            this.successfulAuthentication(request, response, chain, authResult);
-        } else {
-            chain.doFilter(request, response);
+        try {
+            Authentication authResult = attemptAuthentication(request, response);
+            if (authResult != null) {
+                this.successfulAuthentication(request, response, chain, authResult);
+            } else {
+                chain.doFilter(request, response);
+            }
+        } catch (AuthenticationException authenticationException) {
+            unsuccessfulAuthentication(request, response, authenticationException);
         }
 
     }   //  ToDO : Step2
