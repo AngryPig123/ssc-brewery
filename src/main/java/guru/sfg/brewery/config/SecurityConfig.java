@@ -32,19 +32,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authority -> {
-                    authority.antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
-                            .antMatchers("/beers/find/**", "/beers*").permitAll()
+                .authorizeRequests(authorize -> {
+                    authorize
+                            .antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
+                            .antMatchers("/beers/find", "/beers*").permitAll()
                             .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
                             .mvcMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").permitAll();
-                })
+                } )
                 .authorizeRequests()
                 .anyRequest().authenticated()
-                .and().formLogin()
-                .and().httpBasic()
-                .and().csrf().disable()
-        ;
+                .and()
+                .formLogin().and()
+                .httpBasic();
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
