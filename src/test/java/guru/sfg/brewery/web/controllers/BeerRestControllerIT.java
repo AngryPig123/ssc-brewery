@@ -16,7 +16,7 @@ public class BeerRestControllerIT extends BaseIT {
                                 .header("Api-Key", "spring").header("Api-Secret", "guru33")
                 )
                 .andExpect(status().isUnauthorized());
-    }   //  Exception이 나네...
+    }
 
     @Test
     void deleteBeer() throws Exception {
