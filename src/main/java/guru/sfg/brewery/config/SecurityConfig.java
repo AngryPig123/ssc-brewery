@@ -36,24 +36,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().httpBasic();
     }
 
-
-    @Bean   //  <= 중요.
     @Override
-    protected UserDetailsService userDetailsService() {
-        UserDetails admin =
-                User.withDefaultPasswordEncoder()
-                        .username("spring")
-                        .password("guru")
-                        .roles("ADMIN")
-                        .build();
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-        return new InMemoryUserDetailsManager(admin, user);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("spring")
+                .password("{noop}guru")
+                .roles("ADMIN")
+                .and()
+                .withUser("user")
+                .password("{noop}password")
+                .roles("USER");
     }
+
+    //    @Bean   //  <= 중요.
+//    @Override
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails admin =
+//                User.withDefaultPasswordEncoder()
+//                        .username("spring")
+//                        .password("guru")
+//                        .roles("ADMIN")
+//                        .build();
+//        UserDetails user =
+//                User.withDefaultPasswordEncoder()
+//                        .username("user")
+//                        .password("password")
+//                        .roles("USER")
+//                        .build();
+//        return new InMemoryUserDetailsManager(admin, user);
+//    }
 
 
 }
