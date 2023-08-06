@@ -51,14 +51,5 @@ public abstract class BaseIT {
                         .build();
     }
 
-    @Test
-    @WithMockUser("spring")
-    void findBeers_mock_user() throws Exception {
-        mockMvc.perform(get("/beers/find"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("beers/findBeers"))
-                .andExpect(model().attributeExists("beer"));
-    }
-
 
 }

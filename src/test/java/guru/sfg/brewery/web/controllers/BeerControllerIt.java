@@ -11,6 +11,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BeerControllerIt extends BaseIT {
 
     @Test
+    void initCreationFormSpring() throws Exception{
+        mockMvc.perform(get("/beers/new").with(httpBasic("spring","guru")))
+                .andExpect(status().isOk())
+                .andExpect(view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
+    @Test
+    void initCreationForm() throws Exception{
+        mockMvc.perform(get("/beers/new").with(httpBasic("user","password")))
+                .andExpect(status().isOk())
+                .andExpect(view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
+
+    @Test
+    void initCreationFormWithScott() throws Exception{
+        mockMvc.perform(get("/beers/new").with(httpBasic("scott","tiger")))
+                .andExpect(status().isOk())
+                .andExpect(view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
+
+    @Test
     @WithMockUser("spring")
     void findBeers_mock_user() throws Exception {
         mockMvc.perform(get("/beers/find"))
