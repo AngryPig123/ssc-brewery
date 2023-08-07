@@ -27,11 +27,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+/*  ToDO : http header 관련 인증 설정.
     public RestHeaderAuthFilter restHeaderAuthFilter(AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(new AntPathRequestMatcher("/api/**"));    //  AntPathRequestMatcher ?? ToDO 알아보자
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }   //  헤더 인증 필터 구현 완료.
+*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,12 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
+/*        http
                 .addFilterBefore(
                         restHeaderAuthFilter(
                                 authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class
                 );  //  요청헤더에서 해당 자격 증명을 가져온다.
+*/
 
 
         http
@@ -73,15 +76,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-//    @Autowired
-//    JpaUserDetailService jpaUserDetailService;
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(this.jpaUserDetailService)
-//                .passwordEncoder(passwordEncoder());
-//    }
+/*  ToDO : userdetail service 가 2개 이상 필요할 경우 설정, 1가지 서비스를 사용할 경우 UserDetailService 를 찾아서 자동 주입 해준다.
+    @Autowired
+    JpaUserDetailService jpaUserDetailService;
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(this.jpaUserDetailService)
+                .passwordEncoder(passwordEncoder());
+    }
+*/
 
 
 /*  TODO : 인 메모리 구현 방법
