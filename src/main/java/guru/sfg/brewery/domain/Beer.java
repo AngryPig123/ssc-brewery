@@ -34,7 +34,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@ToString(callSuper = true)
 @NoArgsConstructor
 public class Beer extends BaseEntity {
 
@@ -65,7 +64,7 @@ public class Beer extends BaseEntity {
     private Integer quantityToBrew;
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private Set<BeerInventory> beerInventory = new HashSet<>();
 }

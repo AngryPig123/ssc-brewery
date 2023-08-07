@@ -35,7 +35,6 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@ToString(of = {"id"})
 @NoArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
