@@ -1,8 +1,10 @@
 package guru.sfg.brewery.config;
 
 
+import guru.sfg.brewery.security.JpaUserDetailService;
 import guru.sfg.brewery.security.SfgPasswordEncoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -50,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorize -> {
                     authorize
+                            .antMatchers("/h2-console/**").permitAll()  //  h2 console access
                             .antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
                             .antMatchers("/beers/find", "/beers*").permitAll()
                             .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
@@ -64,9 +67,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .csrf().disable();
+
+                //  h2 console access
+                http.headers().frameOptions().sameOrigin();
     }
 
 
+//    @Autowired
+//    JpaUserDetailService jpaUserDetailService;
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .userDetailsService(this.jpaUserDetailService)
+//                .passwordEncoder(passwordEncoder());
+//    }
+
+
+/*  TODO : 인 메모리 구현 방법
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -85,5 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("{ldap}{SSHA}Q8ugr4L4yfmTyLVuC0IxyDdp+wvsbPKTA0KH9Q==")
                 .roles("CUSTOMER");
     }
+*/
+
 
 }
